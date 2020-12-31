@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Douyu-live-address</title>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="./douyu.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        var btn = document.getElementById("btn");
+        var input = document.getElementById("input-roomid");
+        var result = document.getElementById("live-address");
+        btn.addEventListener("click", function () {
+          var roomid = input.value.trim();
+          if (!roomid) {
+            alert("请输入斗鱼直播间房间id");
+          }
+          getLiveAddress(roomid, function (data) {
+            result.textContent = data;
+            input.value = "";
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <input
+        id="input-roomid"
+        type="text"
+        placeholder="请输入斗鱼直播间房间id"
+      />
+      <button id="btn">获取直播地址</button>
+    </div>
+    <div id="live-address" style="width: 500px;word-break: break-all;margin-top: 16px;"></div>
+  </body>
+</html>
