@@ -18,7 +18,7 @@ function getLiveAddress(roomid, callback) {
 
   var options = {
     method: 'post',
-    url: 'https://www.douyu.com/lapi/live/getH5Play/9425685',
+    url: 'https://www.douyu.com/lapi/live/getH5Play/' + roomid,
     form: postBody,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -36,7 +36,7 @@ function getLiveAddress(roomid, callback) {
         var liveAddress = data.rtmp_url + '/' + data.rtmp_live
         callback(liveAddress)
       } else {
-        callback(data.msg)
+        callback(res.msg)
       }
     },
     error: function (err) {
