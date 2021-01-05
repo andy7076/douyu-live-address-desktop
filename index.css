@@ -1,0 +1,10 @@
+.record-tag{
+  font-size: 12pt;
+  cursor: pointer;
+}
+
+.record-close{
+  font-size: 12pt;
+  cursor: pointer;
+  margin-right: 8px;
+}

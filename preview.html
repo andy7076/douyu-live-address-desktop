@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>预览页面</title>
+    <script
+      src="http://cdn.jsdelivr.net/npm/xgplayer/browser/index.js"
+      charset="utf-8"
+    ></script>
+    <script
+      src="http://cdn.jsdelivr.net/npm/xgplayer-flv.js/browser/index.js"
+      charset="utf-8"
+    ></script>
+    <script>
+      window.onload = function () {
+        const ipc = require("electron").ipcRenderer;
+        ipc.on("address", function (event, address) {
+          new window.FlvJsPlayer({
+            id: "player",
+            isLive: false,
+            playsinline: true,
+            url: decodeURIComponent(address),
+            autoplay: true,
+            height: window.innerHeight,
+            width: window.innerWidth,
+          });
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div id="player"></div>
+  </body>
+</html>

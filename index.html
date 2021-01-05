@@ -4,36 +4,135 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Douyu-live-address</title>
-    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.2/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <script src="./storage.js"></script>
     <script src="./douyu.js"></script>
+    <link rel="stylesheet" href="./index.css"></link>
     <script type="text/javascript">
       $(function () {
         var btn = document.getElementById("btn");
         var input = document.getElementById("input-roomid");
         var result = document.getElementById("live-address");
+        var records = document.getElementById("search-records");
+
+        refreshTags()
+
         btn.addEventListener("click", function () {
           var roomid = input.value.trim();
           if (!roomid) {
             alert("请输入斗鱼直播间房间id");
+            return;
+          }
+          search(roomid, false);
+        });
+
+        function search(roomid, tag) {
+          if (tag) {
+            input.value = roomid;
           }
           getLiveAddress(roomid, function (data) {
             result.textContent = data;
-            input.value = "";
+            saveSearchRecord(roomid);
+            refreshTags()
           });
+        }
+
+        function refreshTags(){
+          const tags = document.getElementsByClassName('record-tag')
+          const tagcloses = Array.from(document.getElementsByClassName('record-close'))
+
+          Array.from(tags).forEach((tag,index) => {
+            records.removeChild(tag)
+            records.removeChild(tagcloses[index])
+          })
+          const searchRecords = getSearchRecord();
+          searchRecords.forEach((record) => {
+            var tag = document.createElement("span");
+            tag.innerText = record;
+            tag.className = "label label-info record-tag";
+            tag.addEventListener("click", function () {
+              search(record, true);
+            });
+            var close = document.createElement("span");
+            close.innerText = "x"
+            close.className = "label label-default record-close";
+            close.addEventListener("click", function () {
+              removeTag(record)
+              refreshTags()
+            });
+            records.append(tag);
+            records.append(close);
         });
+        }
       });
+
+      function copy(){
+        var textArea = document.createElement('textarea');
+        textArea.style.position = 'fixed';
+        textArea.style.top = '-9999px';
+        textArea.style.left = '-9999px';
+        textArea.style.zIndex = -9999;
+        textArea.value = document.getElementById('live-address').innerText;
+        textArea.setAttribute('readonly', '');
+        document.body.appendChild(textArea)
+
+        textArea.select();
+        textArea.setSelectionRange(0, textArea.value.length);
+        
+        var flag = false;
+        try {
+          flag = document.execCommand('copy');
+          alert("复制结果到剪切板成功！")
+        } catch (err) {
+          
+        }
+        return flag;
+      }
+      function preview(){
+        const address = document.getElementById('live-address').innerText
+        if(address.includes("https://")){
+          const ipc = require('electron').ipcRenderer
+          ipc.send('preview',encodeURIComponent(address))
+        }else{
+          alert("暂无正确查询结果！")
+        }
+      }
     </script>
   </head>
-  <body>
-    <div>
+  <body style="padding: 16px">
+    <div style="display: flex; margin-bottom: 16px">
       <input
         id="input-roomid"
         type="text"
         placeholder="请输入斗鱼直播间房间id"
+        class="form-control"
+        style="width: 256px; margin-right: 8px"
       />
-      <button id="btn">获取直播地址</button>
+      <button id="btn" class="btn btn-info">获取直播地址</button>
     </div>
-    <div id="live-address" style="width: 500px;word-break: break-all;margin-top: 16px;"></div>
+    <div style="margin-bottom: 16px" id="search-records"></div>
+    <div class="panel panel-default">
+      <div class="panel-body">查询结果</div>
+      <div class="panel-footer" id="live-address" style="word-break: break-all">
+        这里显示查询后的结果信息！
+      </div>
+    </div>
+    <button class="btn btn-default" onclick="copy()">复制结果到剪切板</button>
+    <button class="btn btn-default" onclick="preview()">预览直播视频</button>
+    <hr/>
   </body>
 </html>

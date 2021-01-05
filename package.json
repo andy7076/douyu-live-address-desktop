@@ -1,11 +1,11 @@
 {
-  "name": "douyu-live-address",
+  "name": "Douyu-live-address",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "npx electron .",
+    "serve": "npx electron . --icon=favicon.ico",
     "build": "electron-builder --win --x64"
   },
   "keywords": [],
@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "electron": "^11.1.1"
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
+    "electron-reloader": "^1.1.0"
   }
 }
