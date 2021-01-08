@@ -6,10 +6,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "npx electron . --icon=favicon.ico",
-    "build": "electron-builder --win --x64"
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.yyfollower.douyu",
+    "productName": "斗鱼直播间地址获取",
+    "electronDownload": {
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
+    },
+    "mac": {
+      "icon": "favicon.ico"
+    },
+    "win": {
+      "icon": "favicon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    }
   },
   "keywords": [],
-  "author": "",
+  "author": "andy7076",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {

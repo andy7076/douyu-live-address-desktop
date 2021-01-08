@@ -11,7 +11,7 @@ function createWindow() {
     autoHideMenuBar: true
   })
 
-  win.loadFile('index.html')
+  win.loadFile('./src/index.html')
 }
 
 function createPreviewWindow(address) {
@@ -24,7 +24,7 @@ function createPreviewWindow(address) {
     autoHideMenuBar: true
   })
 
-  win.loadFile('preview.html').then(_ => {
+  win.loadFile('./src/preview.html').then(_ => {
     win.webContents.send('address', address)
   })
 }
