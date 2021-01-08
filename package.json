@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "npx electron . --icon=favicon.ico",
+    "serve": "npx electron .",
     "build": "electron-builder"
   },
   "build": {
@@ -15,10 +15,10 @@
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
     "mac": {
-      "icon": "favicon.ico"
+      "icon": "icon512x512.png"
     },
     "win": {
-      "icon": "favicon.ico"
+      "icon": "icon256x256.png"
     },
     "nsis": {
       "oneClick": true,
