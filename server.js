@@ -59,7 +59,7 @@ function getLiveAddress(roomid, callback) {
     })
 }
 
-express.get('/live-address/:roomid', (req, response) => {
+express.get('/api2/live-address/:roomid', (req, response) => {
   if (!req.params.roomid) {
     res.end(JSON.stringify({
       code: 1,
