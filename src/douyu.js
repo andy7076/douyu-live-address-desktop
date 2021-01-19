@@ -4,6 +4,7 @@ function getLiveAddress(roomid, callback) {
     success: function (res) {
       console.log(res)
       const funStr = /function ub98484234.+?v = (.+?)\.slice\(0\);.+?return eval.+?;}/g.exec(res)
+      console.log(funStr)
       if (!funStr) {
         callback('请输入正确的roomid！')
         return
