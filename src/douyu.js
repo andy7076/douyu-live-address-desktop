@@ -12,7 +12,7 @@ function getLiveAddress(roomid, callback) {
       const vArr = new RegExp('var ' + funStr[1] + '=.+?;', "g").exec(res)
       eval(vArr[0])
       const func = { ub98484234: eval("(" + funStr[0] + ")") }
-      const result = func.ub98484234(roomid, '48285d8f8211a6bc2431e39600051501', parseInt(new Date().getTime() / 1000))
+      const result = func.ub98484234(roomid, random32Str(32), parseInt(new Date().getTime() / 1000))
       const postBody = {
         cdn: "",
         rate: 0,
@@ -56,5 +56,16 @@ function getLiveAddress(roomid, callback) {
       });
     }
   });
+}
+
+function random32Str(len) {
+  len = len || 32;
+  var $chars = 'abcdefhijkmnprstwxyz012345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+  var maxPos = $chars.length;
+  var str = '';
+  for (i = 0; i < len; i++) {
+    str += $chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return str;
 }
 

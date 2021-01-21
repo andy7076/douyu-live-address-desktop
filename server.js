@@ -33,7 +33,7 @@ function getLiveAddress(roomid, callback) {
       const result = func.ub98484234(roomid, random32Str(32), parseInt(new Date().getTime() / 1000))
       const postBody = {
         cdn: "",
-        rate: 0,
+        rate: 2, //	码率标识 0 : 超清，1 ：普清，2 ：高清
         ver: "Douyu_220050105",
         iar: 1,
         ive: 0,
